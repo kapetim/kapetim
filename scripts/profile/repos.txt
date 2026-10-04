@@ -8,7 +8,7 @@
 2|interviewing
 3|browser-extensions
 4|ai-agents
-5|games
+5|browser-games
 6|wiki
 7|data-science
 8|ui-assets
