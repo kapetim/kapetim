@@ -43,17 +43,6 @@ if (( count > 11 )); then
   exit 1
 fi
 
-# repo_date <repo> — YYYY-MM-DD of the last commit, or — when unavailable
-repo_date() {
-  local out=""
-  out="$(gh api "repos/${OWNER}/$1/commits" --jq '.[0].commit.committer.date[0:10]' 2>/dev/null)" || true
-  if [[ "$out" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-    echo "$out"
-  else
-    echo "—"
-  fi
-}
-
 # repo_ci <repo> — 🟢 when HEAD has a success and no failure, else —
 repo_ci() {
   local repo="$1" sha conclusions successes bad
@@ -96,20 +85,19 @@ repo_size() {
 }
 
 build_table() {
-  echo "| # | Repo | Last commit | Tag | Size | CI |"
-  echo "|---|---|---|---|---|---|"
-  local i repo label date ci tag size
+  echo "| # | Repo | Tag | Size | CI |"
+  echo "|---|---|---|---|---|"
+  local i repo label ci tag size
   for i in -1 0 1 2 3 4 5 6 7 8 9; do
     if [[ -z "${SLOTS[$i]:-}" ]]; then
-      echo "| ${i} | — | — | — | — | — |"
+      echo "| ${i} | — | — | — | — |"
       continue
     fi
     IFS='|' read -r repo label <<<"${SLOTS[$i]}"
-    date="$(repo_date "$repo")"
     tag="$(repo_tag "$repo")"
     size="$(repo_size "$repo")"
     ci="$(repo_ci "$repo")"
-    echo "| ${i} | [${label}](https://github.com/${OWNER}/${repo}) | ${date} | ${tag} | ${size} | ${ci} |"
+    echo "| ${i} | [${label}](https://github.com/${OWNER}/${repo}) | ${tag} | ${size} | ${ci} |"
   done
 }
 
