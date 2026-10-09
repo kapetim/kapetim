@@ -11,5 +11,5 @@
 5|browser-games
 6|wiki
 7|data-science
-8|ui-assets
-9|
+8|pkg-manager
+9|ui-assets

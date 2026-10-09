@@ -10,6 +10,6 @@
 | 5 | [browser-games](https://github.com/kapetim/browser-games) | 2026-10-09T04-16-08Z | 62 KB | — |
 | 6 | [wiki](https://github.com/kapetim/wiki) | 2026-10-09T04-15-58Z | 561 KB | — |
 | 7 | [data-science](https://github.com/kapetim/data-science) | 2026-10-09T04-09-51Z | 112 KB | — |
-| 8 | [ui-assets](https://github.com/kapetim/ui-assets) | 2026-09-28 | 3 KB | — |
-| 9 | — | — | — | — |
+| 8 | [pkg-manager](https://github.com/kapetim/pkg-manager) | — | — | — |
+| 9 | [ui-assets](https://github.com/kapetim/ui-assets) | 2026-09-28 | 3 KB | — |
 <!-- END status-table -->
