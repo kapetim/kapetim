@@ -1,0 +1,7 @@
+{
+  "build": {
+    "dockerfile": "../docker/devcontainer.Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode"
+}

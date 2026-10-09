@@ -1,0 +1,32 @@
+# git / CI
+.git
+.github
+
+# content (not needed inside the image — mounted at runtime)
+src
+README.md
+
+# deps / build
+node_modules
+dist
+coverage
+out
+build
+
+# env / secrets
+.env
+.env.*
+
+# tooling
+.devcontainer
+.vscode
+.opencode
+
+# OS / logs
+*.log
+.DS_Store
+Thumbs.db
+
+# meta (not needed inside image)
+.gitignore
+.dockerignore
