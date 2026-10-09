@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: "📐 Issue hierarchy — epic → feature → task"
-    url: https://github.com/kapetim/.github/blob/main/guidance/epic.md
-    about: How to parent issues (guidance, not a template).
-  - name: "🧭 Contributing"
-    url: https://github.com/kapetim/.github/blob/main/CONTRIBUTING.md
-    about: Guidelines for issues and pull requests.

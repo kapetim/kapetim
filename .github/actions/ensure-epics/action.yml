@@ -1,8 +1,0 @@
-name: Ensure epics
-description: Create any missing per-folder epic issues in the current repository.
-runs:
-  using: composite
-  steps:
-    - name: Ensure epics
-      shell: bash
-      run: bash "${{ github.action_path }}/../../../scripts/ensure-epics.sh"

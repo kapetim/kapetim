@@ -1,8 +1,0 @@
-name: Sync labels
-description: Ensure the standard labels (epic, feature, task, default) exist.
-runs:
-  using: composite
-  steps:
-    - name: Sync labels
-      shell: bash
-      run: bash "${{ github.action_path }}/../../../scripts/sync-labels.sh"

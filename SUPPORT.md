@@ -2,7 +2,8 @@
 
 ## Where to get help
 
-- **Bugs / features / tasks** — open an issue using the templates. Pick the level that fits: an **epic** for a domain, a **feature** under it, or a **task** for a single narrow item.
+- **Bugs / features / questions** — open an issue. Keep it flat: one issue per thing, related with comments and
+  links.
 - **Questions** — use the `question` label.
 - **Security** — follow [SECURITY.md](SECURITY.md); never post vulnerabilities publicly.
 
@@ -14,4 +15,5 @@
 
 ## Scope
 
-These repos are personal projects maintained on a best-effort basis. There is no SLA, and support is provided as time allows.
+These repos are personal projects maintained on a best-effort basis. There is no SLA, and support is provided as
+time allows.

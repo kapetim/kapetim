@@ -11,7 +11,7 @@ Closes #
 
 ## Checklist
 
-- [ ] Linked to an issue (`Closes #…`) and fits the hierarchy `epic → feature → task`
+- [ ] Linked to an issue (`Closes #…`)
 - [ ] Docs updated if behavior changed
 - [ ] Checks pass locally (linters + tests)
 - [ ] No secrets, tokens, or personal data introduced
