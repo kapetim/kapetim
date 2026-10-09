@@ -1,0 +1,47 @@
+name: pr-create (ai-coder reusable)
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: Target repository (owner/name)
+        required: true
+        type: string
+      issue_number:
+        description: Issue this PR implements
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      repo:
+        type: string
+        required: true
+        description: Target repository (owner/name)
+      issue_number:
+        type: string
+        required: true
+        description: Issue this PR implements
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          ref: ${{ github.head_ref }}
+
+      # ai marker: pr-create-gh
+      # TODO(ai): branch ai/<issue>-<slug>, implement issue #N + tests, open a
+      # draft PR linking the issue, comment the PR link on the issue.
+      - name: AI stub — create PR
+        run: |
+          echo "AI_STAGE=pr-create"
+          echo "REPO=${{ inputs.repo }}"
+          echo "ISSUE=${{ inputs.issue_number }}"

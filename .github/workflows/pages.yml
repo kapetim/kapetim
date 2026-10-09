@@ -1,0 +1,51 @@
+name: pages
+
+# Manual, cross-repo. Runs scripts/pages.sh inside docker/pages.Dockerfile from
+# the target repo, then force-pushes _site/ to the target's gh-pages branch.
+# Needs a RELEASE_TOKEN PAT (repo scope) and the target's Pages source set to
+# "Deploy from a branch: gh-pages".
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Target repo (owner/name, e.g. kapetim/ui-assets)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-${{ inputs.repo }}
+  cancel-in-progress: true
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          submodules: recursive
+          lfs: true
+      - name: Build image
+        run: docker build -f docker/pages.Dockerfile -t repo-pages .
+      - name: Run scripts/pages.sh
+        run: docker run --rm -v "$PWD:/repo" -w /repo repo-pages bash scripts/pages.sh
+      - name: Deploy to gh-pages
+        working-directory: _site
+        run: |
+          set -euo pipefail
+          git init -q
+          git checkout -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "deploy: $(date -u +%Y-%m-%dT%H-%M-%SZ)"
+          git push -q --force \
+            "https://x-access-token:${{ secrets.RELEASE_TOKEN }}@github.com/${{ inputs.repo }}.git" \
+            gh-pages

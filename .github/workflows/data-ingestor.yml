@@ -1,0 +1,37 @@
+name: data-ingestor
+
+# Manual, cross-repo. Runs scripts/data-ingestor.sh inside
+# docker/data-ingestor.Dockerfile from the target repo.
+# Needs a RELEASE_TOKEN PAT (repo scope).
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Target repo (owner/name, e.g. kapetim/data-science)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-ingestor-${{ inputs.repo }}
+  cancel-in-progress: false
+
+jobs:
+  data-ingestor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          submodules: recursive
+          lfs: true
+      - name: Build image
+        run: docker build -f docker/data-ingestor.Dockerfile -t repo-data-ingestor .
+      - name: Run scripts/data-ingestor.sh
+        run: docker run --rm -v "$PWD:/repo" -w /repo repo-data-ingestor bash scripts/data-ingestor.sh

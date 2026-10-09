@@ -1,0 +1,16 @@
+name: Profile refresh
+description: Refresh the repo-status table in the profile README and open a PR.
+inputs:
+  token:
+    description: PAT with contents/PR access to the profile repo.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Refresh profile table
+      shell: bash
+      env:
+        STATUS_TOKEN: ${{ inputs.token }}
+        STATUS_OWNER: ${{ github.repository_owner }}
+        STATUS_TARGET_REPO: kapetim/kapetim
+      run: bash "${{ github.action_path }}/../../scripts/profile/refresh.sh"

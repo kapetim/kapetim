@@ -1,0 +1,44 @@
+name: release
+
+# Manual, cross-repo. Runs scripts/release.sh inside docker/release.Dockerfile
+# from the target repo. Needs a RELEASE_TOKEN PAT (repo scope).
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Target repo (owner/name, e.g. kapetim/cli)"
+        required: true
+        type: string
+      version:
+        description: "Optional version/tag to release"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ inputs.repo }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          fetch-depth: 0
+          submodules: recursive
+          lfs: true
+      - name: Build image
+        run: docker build -f docker/release.Dockerfile -t repo-release .
+      - name: Run scripts/release.sh
+        env:
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: docker run --rm -v "$PWD:/repo" -w /repo -e VERSION -e GH_TOKEN repo-release bash scripts/release.sh

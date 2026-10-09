@@ -1,0 +1,36 @@
+name: ci
+
+# Manual, cross-repo. Runs scripts/ci.sh inside docker/ci.Dockerfile from the
+# target repo. Needs a RELEASE_TOKEN PAT (repo scope).
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Target repo (owner/name, e.g. kapetim/cli)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ inputs.repo }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout target
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          token: ${{ secrets.RELEASE_TOKEN }}
+          submodules: recursive
+          lfs: true
+      - name: Build image
+        run: docker build -f docker/ci.Dockerfile -t repo-ci .
+      - name: Run scripts/ci.sh
+        run: docker run --rm -v "$PWD:/repo" -w /repo repo-ci bash scripts/ci.sh

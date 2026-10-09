@@ -1,0 +1,22 @@
+name: Refresh profile repo
+
+# Manual only. Refreshes the repo-status table in this (profile) README.
+# Boilerplate: uses the built-in GITHUB_TOKEN; the action may still open a PR.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh-profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh profile table
+        uses: ./.github/actions/profile
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

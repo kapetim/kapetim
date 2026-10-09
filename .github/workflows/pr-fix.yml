@@ -1,0 +1,71 @@
+name: pr-fix (ai-coder reusable)
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: Target repository (owner/name)
+        required: true
+        type: string
+      pr_number:
+        description: PR with failing checks to fix
+        required: true
+        type: string
+      max_attempts:
+        description: Maximum fix attempts before the janitor takes over
+        required: false
+        default: 3
+        type: number
+  workflow_call:
+    inputs:
+      repo:
+        type: string
+        required: true
+        description: Target repository (owner/name)
+      pr_number:
+        type: string
+        required: true
+        description: PR with failing checks to fix
+      max_attempts:
+        type: number
+        required: false
+        default: 3
+        description: Maximum fix attempts before the janitor takes over
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fix-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          ref: refs/pull/${{ inputs.pr_number }}/head
+
+      - name: Count fix attempts on PR
+        id: attempts
+        run: |
+          n=$(gh pr view "${{ inputs.pr_number }}" --repo "${{ inputs.repo }}" \
+            --json comments --jq '[.comments[].body] | map(select(startswith("<!-- ai-fix-attempt"))) | length')
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+
+      - name: Stop if attempts exhausted
+        if: steps.attempts.outputs.count >= inputs.max_attempts
+        run: |
+          echo "PR #${{ inputs.pr_number }} already has ${{ steps.attempts.outputs.count }} fix attempts (max ${{ inputs.max_attempts }}). Leaving it to pr-janitor."
+          exit 0
+
+      # ai marker: pr-fix-gh
+      # TODO(ai): read CI failures, implement fixes, push to the PR branch, update
+      # the PR body, then post an attempt marker:
+      #   gh pr comment <pr> --body "<!-- ai-fix-attempt -->"
+      - name: AI stub — fix PR
+        run: |
+          echo "AI_STAGE=pr-fix"
+          echo "REPO=${{ inputs.repo }}"
+          echo "PR=${{ inputs.pr_number }}"
+          echo "ATTEMPTS=${{ steps.attempts.outputs.count }}"

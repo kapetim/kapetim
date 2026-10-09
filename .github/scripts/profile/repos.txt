@@ -1,0 +1,14 @@
+# Repo order map — one source per domain.
+# `-1` is the private vault (out of band); `0-9` are the regular slots.
+# Format: index|repo|label   (label optional; empty repo = reserved slot)
+# Exceeding the set is an error: append to an existing repo instead.
+-1|private|private
+0|kapetim|profile
+1|cli
+2|interviewing
+3|browser-extensions
+5|browser-games
+6|wiki
+7|data-science
+8|ui-assets
+9|ai-training

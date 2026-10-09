@@ -1,0 +1,57 @@
+name: pr-review (ai-coder reusable)
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: Target repository (owner/name)
+        required: true
+        type: string
+      pr_number:
+        description: PR to review
+        required: true
+        type: string
+      approve:
+        description: Allow approving the PR when confident
+        required: false
+        default: false
+        type: boolean
+  workflow_call:
+    inputs:
+      repo:
+        type: string
+        required: true
+        description: Target repository (owner/name)
+      pr_number:
+        type: string
+        required: true
+        description: PR to review
+      approve:
+        type: boolean
+        required: false
+        default: false
+        description: Allow approving the PR when confident
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          ref: refs/pull/${{ inputs.pr_number }}/head
+
+      # ai marker: pr-review-gh
+      # TODO(ai): only when checks are green, post a review summary; flag issues,
+      # never silently approve unless approve=true and confident. Skip re-review.
+      - name: AI stub — review PR
+        run: |
+          echo "AI_STAGE=pr-review"
+          echo "REPO=${{ inputs.repo }}"
+          echo "PR=${{ inputs.pr_number }}"
+          echo "APPROVE=${{ inputs.approve }}"

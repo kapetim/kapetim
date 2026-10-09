@@ -1,0 +1,76 @@
+name: pr-janitor (ai-coder reusable)
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: Target repository (owner/name)
+        required: true
+        type: string
+      pr_number:
+        description: Single PR to inspect; empty = scan all open PRs
+        required: false
+        default: ''
+        type: string
+      max_attempts:
+        description: Attempts past which a PR is considered stuck
+        required: false
+        default: 3
+        type: number
+  workflow_call:
+    inputs:
+      repo:
+        type: string
+        required: true
+        description: Target repository (owner/name)
+      pr_number:
+        type: string
+        required: false
+        default: ''
+        description: Single PR to inspect; empty = scan all open PRs
+      max_attempts:
+        type: number
+        required: false
+        default: 3
+        description: Attempts past which a PR is considered stuck
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  janitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+
+      - name: Close stuck PRs and log tracking issues
+        run: |
+          set -euo pipefail
+          prs="${{ inputs.pr_number }}"
+          if [ -z "$prs" ]; then
+            prs=$(gh pr list --repo "${{ inputs.repo }}" --state open --limit 100 --json number --jq '.[].number' | tr '\n' ' ')
+          fi
+          for pr in $prs; do
+            n=$(gh pr view "$pr" --repo "${{ inputs.repo }}" --json comments \
+              --jq '[.comments[].body] | map(select(startswith("<!-- ai-fix-attempt"))) | length')
+            echo "PR #$pr: $n fix attempts (max ${{ inputs.max_attempts }})"
+            if [ "$n" -ge "${{ inputs.max_attempts }}" ]; then
+              title=$(gh pr view "$pr" --repo "${{ inputs.repo }}" --json title --jq .title)
+              gh pr comment "$pr" --repo "${{ inputs.repo }}" --body \
+                "ai-coder janitor: closing after $n failed fix attempts (max ${{ inputs.max_attempts }}). Tracking issue opened."
+              gh pr close "$pr" --repo "${{ inputs.repo }}" --comment "Closed by ai-coder janitor (stuck)."
+              gh issue create --repo "${{ inputs.repo }}" --title "Stuck PR #$pr — $title" \
+                --label ai/stuck \
+                --body "PR #$pr exceeded ${{ inputs.max_attempts }} fix attempts and was closed by ai-coder janitor. Reopen as a fresh task or review manually."
+              echo "PR #$pr: closed + tracking issue opened"
+            fi
+          done
+
+      # ai marker: pr-janitor-gh
+      # TODO(ai): optionally assist in deciding stuck vs salvageable, and in
+      # writing richer tracking-issue bodies.
