@@ -63,6 +63,5 @@ order lives in [`repos.txt`](../.github/scripts/profile/repos.txt).
 
 - `-1` private (vault)
 - `0` profile (this repo)
-- `1` cli · `2` interviewing · `3` browser-extensions
-- `4` *(retired — was ai-agents)*
-- `5` browser-games · `6` wiki · `7` data-science · `8` ui-assets · `9` ai-training
+- `1` cli · `2` interviewing · `3` browser-extensions · `4` ai-training
+- `5` browser-games · `6` wiki · `7` data-science · `8` ui-assets · `9` *(reserved)*
