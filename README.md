@@ -25,17 +25,31 @@ kapetim/<repo>  --PR-->  kapetao/<repo>:main        (reviewed & merged by kapeta
 
 ## Repositories
 
+This account sits one floor below `kapetao`: `-1` is this profile, `0` is
+[`kapetao/kapetao`](https://github.com/kapetao/kapetao), and every fork maps onto a `kapetao`
+public floor above it. Nothing canonical lives here — the forks are PR senders only.
+
+```mermaid
+flowchart TB
+  g0["0 · kapetao/kapetao — 0 and above ↗ (+∞)"]:::ground
+  m1["-1 · kapetim — this profile (forks only)"]:::priv
+  g0 --- m1
+  classDef ground fill:#ddf4ff,stroke:#0969da,color:#0a3069;
+  classDef priv fill:#ffeff7,stroke:#bf3989,color:#4c0a2f;
+```
+
 <!-- BEGIN status-table -->
-| # | Repo | Tag | Size | CI |
-|---|---|---|---|---|
-| 9 | [ui-assets](https://github.com/kapetim/ui-assets) | — | — | — |
-| 8 | [pkg-manager](https://github.com/kapetim/pkg-manager) | — | — | — |
-| 7 | [radar](https://github.com/kapetim/radar) | — | — | — |
-| 6 | [journal](https://github.com/kapetim/journal) | — | — | — |
-| 5 | [browser-games](https://github.com/kapetim/browser-games) | — | — | — |
-| 4 | [ai-training](https://github.com/kapetim/ai-training) | — | — | — |
-| 3 | [browser-extensions](https://github.com/kapetim/browser-extensions) | — | — | — |
-| 2 | [interviewing](https://github.com/kapetim/interviewing) | — | — | — |
-| 1 | [cli](https://github.com/kapetim/cli) | — | — | — |
-| 0 | [kapetao](https://github.com/kapetim/kapetao) | — | — | — |
+| Floor | Fork | Upstream | Tag | Size | CI |
+|------:|------|----------|-----|------|----|
+| ☀️ +9 | [ui-assets](https://github.com/kapetim/ui-assets) | [kapetao/ui-assets](https://github.com/kapetao/ui-assets) | — | — | — |
+| ☀️ +8 | [pkg-manager](https://github.com/kapetim/pkg-manager) | [kapetao/pkg-manager](https://github.com/kapetao/pkg-manager) | — | — | — |
+| ☀️ +7 | [radar](https://github.com/kapetim/radar) | [kapetao/radar](https://github.com/kapetao/radar) | — | — | — |
+| ☀️ +6 | [journal](https://github.com/kapetim/journal) | [kapetao/journal](https://github.com/kapetao/journal) | — | — | — |
+| ☀️ +5 | [browser-games](https://github.com/kapetim/browser-games) | [kapetao/browser-games](https://github.com/kapetao/browser-games) | — | — | — |
+| ☀️ +4 | [ai-training](https://github.com/kapetim/ai-training) | [kapetao/ai-training](https://github.com/kapetao/ai-training) | — | — | — |
+| ☀️ +3 | [browser-extensions](https://github.com/kapetim/browser-extensions) | [kapetao/browser-extensions](https://github.com/kapetao/browser-extensions) | — | — | — |
+| ☀️ +2 | [interviewing](https://github.com/kapetim/interviewing) | [kapetao/interviewing](https://github.com/kapetao/interviewing) | — | — | — |
+| ☀️ +1 | [cli](https://github.com/kapetim/cli) | [kapetao/cli](https://github.com/kapetao/cli) | — | — | — |
+| 🏢 0 | [kapetao](https://github.com/kapetao/kapetao) | — | — | — | — |
+| 🌑 -1 | [kapetim](https://github.com/kapetim/kapetim) *(this profile)* | — | — | — | — |
 <!-- END status-table -->
