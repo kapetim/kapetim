@@ -1,55 +1,61 @@
-# kapetim
+# Machine account
 
-**Machine account for [`kapetao`](https://github.com/kapetao).**
+**Contributor — clone freely, ship pull requests. Never merge.**
 
-This is the **machine account** set up by the human operator of `kapetao` to do one job:
-open **pull requests** against `kapetao`'s public repositories, from forks.
+This is the **machine account** for the **main account**: a contributor that does exactly one job —
+turn issues into reviewed pull requests.
 
-A GitHub *machine account* is an account set up by a person who accepts the Terms of Service on
-its behalf, used **exclusively for automated tasks**, and limited to **one** such account
-alongside that person's own account. `kapetao` is the human/canonical account; `kapetim` is its
-single machine account — the automation never touches `kapetao` directly.
+- **Clone freely** over **SSH** with a full-repo key.
+- **One branch per issue**, cut from a clean, up-to-date `main`; push it to the fork and open a PR
+  that **closes the linked issue**.
+- **Never merge.** The main account reviews, approves (one review), and merges.
 
-This account handles **public repositories only**; the canonicals live in `kapetao`.
+## Workflow — the relay
 
-## Role
+1. **Start clean.** Fetch the latest upstream `main` and branch from it. Never continue a stale branch.
+2. **Branch** for one issue (`<repo>:<issue>`).
+3. **Implement + push**, open the PR with `Closes #N`.
+4. **Delete the branch** once merged; the fork falls back to `main`.
+5. **Unsure?** Comment on the issue and stop — resume later from a fresh `main`.
 
-- **Fork** each public `kapetao` repo → `kapetim/<repo>` (one fork per repo).
-- **Author pull requests** from those forks into `kapetao/<repo>:main`.
-- **Never merge.** `kapetao` owns the canonicals and holds the approvals — every `kapetao` repo
-  requires a PR with **1 approving review**, with admins enforced (no direct pushes).
-
-```text
-kapetim/<repo>  --PR-->  kapetao/<repo>:main        (reviewed & merged by kapetao)
-```
-
-## Repositories
-
-This account sits one floor below `kapetao`: `-1` is this profile, `0` is
-[`kapetao/kapetao`](https://github.com/kapetao/kapetao), and every fork maps onto a `kapetao`
-public floor above it. Nothing canonical lives here — the forks are PR senders only.
+Pick up exactly where the last runner stopped, but never keep running on an outdated baton.
 
 ```mermaid
-flowchart TB
-  g0["0 · kapetao/kapetao — 0 and above ↗ (+∞)"]:::ground
-  m1["-1 · kapetim — this profile (forks only)"]:::priv
-  g0 --- m1
-  classDef ground fill:#ddf4ff,stroke:#0969da,color:#0a3069;
-  classDef priv fill:#ffeff7,stroke:#bf3989,color:#4c0a2f;
+flowchart LR
+  issue["📝 issue · upstream#N"]:::canon
+  key["🔑 SSH key · full-repo scope"]:::infra
+  mach["🤖 machine account"]:::machine
+  fork["🍴 fork"]:::fork
+  canon["📦 upstream · main"]:::canon
+  ui["📱 tablet · GitHub UI"]:::human
+
+  issue --> mach
+  key --> mach
+  mach -->|commit · push| fork
+  fork -->|open PR “closes #N”| canon
+  canon -->|review + comment| ui
+  ui -->|approve + merge| canon
+  canon -.->|auto-closes| issue
+
+  classDef infra fill:#f6f8fa,stroke:#666;
+  classDef machine fill:#ddf4ff,stroke:#0969da;
+  classDef fork fill:#fff8c5,stroke:#9a6700;
+  classDef canon fill:#dafbe1,stroke:#1a7f37;
+  classDef human fill:#ffeff7,stroke:#bf3989;
 ```
 
-<!-- BEGIN status-table -->
-| Floor | Fork | Upstream | Tag | Size | CI |
-|------:|------|----------|-----|------|----|
-| ☀️ +9 | [ui-assets](https://github.com/kapetim/ui-assets) | [kapetao/ui-assets](https://github.com/kapetao/ui-assets) | — | — | — |
-| ☀️ +8 | [pkg-manager](https://github.com/kapetim/pkg-manager) | [kapetao/pkg-manager](https://github.com/kapetao/pkg-manager) | — | — | — |
-| ☀️ +7 | [radar](https://github.com/kapetim/radar) | [kapetao/radar](https://github.com/kapetao/radar) | — | — | — |
-| ☀️ +6 | [journal](https://github.com/kapetim/journal) | [kapetao/journal](https://github.com/kapetao/journal) | — | — | — |
-| ☀️ +5 | [browser-games](https://github.com/kapetim/browser-games) | [kapetao/browser-games](https://github.com/kapetao/browser-games) | — | — | — |
-| ☀️ +4 | [ai-training](https://github.com/kapetim/ai-training) | [kapetao/ai-training](https://github.com/kapetao/ai-training) | — | — | — |
-| ☀️ +3 | [browser-extensions](https://github.com/kapetim/browser-extensions) | [kapetao/browser-extensions](https://github.com/kapetao/browser-extensions) | — | — | — |
-| ☀️ +2 | [interviewing](https://github.com/kapetim/interviewing) | [kapetao/interviewing](https://github.com/kapetao/interviewing) | — | — | — |
-| ☀️ +1 | [cli](https://github.com/kapetim/cli) | [kapetao/cli](https://github.com/kapetao/cli) | — | — | — |
-| 🏢 0 | [kapetao](https://github.com/kapetao/kapetao) | — | — | — | — |
-| 🌑 -1 | [kapetim](https://github.com/kapetim/kapetim) *(this profile)* | — | — | — | — |
-<!-- END status-table -->
+## Forks
+
+| Floor | Fork | Upstream |
+|------:|------|----------|
+| ☀️ +9 | ui-assets | ui-assets |
+| ☀️ +8 | pkg-manager | pkg-manager |
+| ☀️ +7 | radar | radar |
+| ☀️ +6 | journal | journal |
+| ☀️ +5 | browser-games | browser-games |
+| ☀️ +4 | ai-training | ai-training |
+| ☀️ +3 | browser-extensions | browser-extensions |
+| ☀️ +2 | interviewing | interviewing |
+| ☀️ +1 | cli | cli |
+| 🏢 0 | upstream profile | — |
+| 🌑 -1 | this profile | — |
