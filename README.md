@@ -2,13 +2,14 @@
 
 **Contributor — clone freely, ship pull requests. Never merge.**
 
-This is the **machine account** for the **main account**: a contributor that does exactly one job —
-turn issues into reviewed pull requests.
+This is the **machine account** for [the main account](https://github.com/kapetao): a contributor
+that does exactly one job — turn issues into reviewed pull requests.
 
 - **Clone freely** over **SSH** with a full-repo key.
 - **One branch per issue**, cut from a clean, up-to-date `main`; push it to the fork and open a PR
   that **closes the linked issue**.
-- **Never merge.** The main account reviews, approves (one review), and merges.
+- **Never merge.** [The main account](https://github.com/kapetao) reviews, approves (one review),
+  and merges.
 
 ## Workflow — the relay
 
@@ -21,7 +22,7 @@ turn issues into reviewed pull requests.
 Pick up exactly where the last runner stopped, but never keep running on an outdated baton.
 
 ```mermaid
-flowchart LR
+flowchart TB
   issue["📝 issue · upstream#N"]:::canon
   key["🔑 SSH key · full-repo scope"]:::infra
   mach["🤖 machine account"]:::machine
@@ -43,19 +44,3 @@ flowchart LR
   classDef canon fill:#dafbe1,stroke:#1a7f37;
   classDef human fill:#ffeff7,stroke:#bf3989;
 ```
-
-## Forks
-
-| Floor | Fork | Upstream |
-|------:|------|----------|
-| ☀️ +9 | ui-assets | ui-assets |
-| ☀️ +8 | pkg-manager | pkg-manager |
-| ☀️ +7 | radar | radar |
-| ☀️ +6 | journal | journal |
-| ☀️ +5 | browser-games | browser-games |
-| ☀️ +4 | ai-training | ai-training |
-| ☀️ +3 | browser-extensions | browser-extensions |
-| ☀️ +2 | interviewing | interviewing |
-| ☀️ +1 | cli | cli |
-| 🏢 0 | upstream profile | — |
-| 🌑 -1 | this profile | — |
