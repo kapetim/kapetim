@@ -7,9 +7,10 @@ open **pull requests** against `kapetao`'s public repositories, from forks.
 
 A GitHub *machine account* is an account set up by a person who accepts the Terms of Service on
 its behalf, used **exclusively for automated tasks**, and limited to **one** such account
-alongside that person's own account. This repo exists to be explicit about that arrangement:
-`kapetao` is the human/canonical account, and `kapetim` is its single machine account — the
-automation never touches `kapetao` directly.
+alongside that person's own account. `kapetao` is the human/canonical account; `kapetim` is its
+single machine account — the automation never touches `kapetao` directly.
+
+This account handles **public repositories only**; the canonicals live in `kapetao`.
 
 ## Role
 
@@ -22,8 +23,19 @@ automation never touches `kapetao` directly.
 kapetim/<repo>  --PR-->  kapetao/<repo>:main        (reviewed & merged by kapetao)
 ```
 
-Local clones pin `origin = kapetim/<repo>` (the fork) and `upstream = kapetao/<repo>` (the original).
+## Repositories
 
-## Not here
-
-Private repositories are outside this flow — they stay separate and self-contained.
+<!-- BEGIN status-table -->
+| # | Repo | Tag | Size | CI |
+|---|---|---|---|---|
+| 9 | [ui-assets](https://github.com/kapetim/ui-assets) | — | — | — |
+| 8 | [pkg-manager](https://github.com/kapetim/pkg-manager) | — | — | — |
+| 7 | [radar](https://github.com/kapetim/radar) | — | — | — |
+| 6 | [journal](https://github.com/kapetim/journal) | — | — | — |
+| 5 | [browser-games](https://github.com/kapetim/browser-games) | — | — | — |
+| 4 | [ai-training](https://github.com/kapetim/ai-training) | — | — | — |
+| 3 | [browser-extensions](https://github.com/kapetim/browser-extensions) | — | — | — |
+| 2 | [interviewing](https://github.com/kapetim/interviewing) | — | — | — |
+| 1 | [cli](https://github.com/kapetim/cli) | — | — | — |
+| 0 | [kapetao](https://github.com/kapetim/kapetao) | — | — | — |
+<!-- END status-table -->
