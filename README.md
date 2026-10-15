@@ -1,7 +1,3 @@
-# Machine account
-
-**Contributor — clone freely, ship pull requests. Never merge.**
-
 This is the **machine account** for [the main account](https://github.com/kapetao): a contributor
 that does exactly one job — turn issues into reviewed pull requests.
 
