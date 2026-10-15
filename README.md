@@ -1,15 +1,11 @@
-This is the **machine account** for [the main account](https://github.com/kapetao): a contributor
-that does exactly one job — turn issues into pull requests, usually with an AI agent driving.
+This is the **machine account** for [the main account](https://github.com/kapetao).
 
-> ⚠️ **Do not build anything here.** This account only **forks** the upstream repos and sends pull
-> requests. Create issues, content, and history in the **upstream** repos — never in the machine
-> account. Its only non-fork is this profile.
+> ⚠️ **Do not build anything here.** This account only **forks** the upstream repos and sends pull requests. Create issues, content, and history in the **upstream** repos.
 
-- **Sign in once, use it anywhere.** Authentication is a single **gh auth** login.
-- **Ubuntu 26.04 LTS** → **VS Code** → **opencode** → **DeepSeek V4.1 Flash**.
-  - Via an API key budgeted at **~$1/day**. 
+- **Kubuntu** → **Firefox** → **VS Code** → **opencode** → **DeepSeek V4.1 Flash**
+  - Via an API key budgeted at **~$1/day**
 
-## Workflow — the relay
+## Workflow
 
 1. **Start clean.** Fetch the latest upstream `main`.
 2. **Branch** for one issue (`<repo>:<issue>`).
