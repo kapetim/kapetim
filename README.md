@@ -5,6 +5,10 @@
 This is the **machine account** for [the main account](https://github.com/kapetao): a contributor
 that does exactly one job — turn issues into reviewed pull requests.
 
+> ⚠️ **Do not build anything here.** This account only **forks** the upstream repos and sends pull
+> requests. Create issues, content, and history in the **upstream** repos — never in the machine
+> account. Its only non-fork is this profile.
+
 - **Clone freely** over **SSH** with a full-repo key.
 - **One branch per issue**, cut from a clean, up-to-date `main`; push it to the fork and open a PR
   that **closes the linked issue**.
