@@ -5,17 +5,13 @@ that does exactly one job — turn issues into pull requests, usually with an AI
 > requests. Create issues, content, and history in the **upstream** repos — never in the machine
 > account. Its only non-fork is this profile.
 
-- **Sign in once, use it anywhere.** Authentication is a single **gh auth** login
-  (`gh auth login` — browser/device flow, same idea as signing into VS Code). No per-machine SSH
-  keys to provision; the credential travels with you.
-- **AI-assisted by default.** **VS Code on Ubuntu 26.04 LTS → opencode v2 → DeepSeek V4.1 Flash**,
-  via an API key budgeted at **~$1/day**. The agent commits, pushes, and opens the PRs.
-- **Portable by design.** Nothing is pinned to this one box — the runner is headed for a **private
-  VPC** so it moves without depending on specific hardware.
+- **Sign in once, use it anywhere.** Authentication is a single **gh auth** login.
+- **Ubuntu 26.04 LTS** → **VS Code** → **opencode** → **DeepSeek V4.1 Flash**.
+  - Via an API key budgeted at **~$1/day**. 
 
 ## Workflow — the relay
 
-1. **Start clean.** Fetch the latest upstream `main` and branch from it. Never continue a stale branch.
+1. **Start clean.** Fetch the latest upstream `main`.
 2. **Branch** for one issue (`<repo>:<issue>`).
 3. **Implement + push**, open the PR with `Closes #N`.
 4. **Delete the branch** once merged; the fork falls back to `main`.
