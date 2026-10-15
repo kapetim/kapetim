@@ -13,10 +13,6 @@ that does exactly one job — turn issues into pull requests, usually with an AI
   branches, commits, pushes, and opens the PRs.
 - **Portable by design.** Nothing is pinned to this one box — the runner is headed for a **private
   VPC** so it moves without depending on specific hardware.
-- **One branch per issue**, cut from a clean, up-to-date `main`; push it to the fork and open a PR
-  that **closes the linked issue**.
-- **The main account is the gate.** [kapetao](https://github.com/kapetao) owns the review rules and
-  PR restrictions — every PR needs its review before it merges.
 
 ## Workflow — the relay
 
@@ -25,9 +21,6 @@ that does exactly one job — turn issues into pull requests, usually with an AI
 3. **Implement + push**, open the PR with `Closes #N`.
 4. **Delete the branch** once merged; the fork falls back to `main`.
 5. **Unsure?** Comment on the issue and stop — resume later from a fresh `main`.
-
-Plug-and-play: any machine that can run `gh auth login` and hold an API key can pick up the baton and
-keep running — just never keep running on an outdated one.
 
 ```mermaid
 flowchart TB
