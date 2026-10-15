@@ -9,8 +9,7 @@ that does exactly one job — turn issues into pull requests, usually with an AI
   (`gh auth login` — browser/device flow, same idea as signing into VS Code). No per-machine SSH
   keys to provision; the credential travels with you.
 - **AI-assisted by default.** **VS Code on Ubuntu 26.04 LTS → opencode v2 → DeepSeek V4.1 Flash**,
-  via an API key on the most generous free tier and budgeted at **~$1/day**. The agent clones,
-  branches, commits, pushes, and opens the PRs.
+  via an API key budgeted at **~$1/day**. The agent commits, pushes, and opens the PRs.
 - **Portable by design.** Nothing is pinned to this one box — the runner is headed for a **private
   VPC** so it moves without depending on specific hardware.
 
