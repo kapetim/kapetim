@@ -1,15 +1,22 @@
 This is the **machine account** for [the main account](https://github.com/kapetao): a contributor
-that does exactly one job — turn issues into reviewed pull requests.
+that does exactly one job — turn issues into pull requests, usually with an AI agent driving.
 
 > ⚠️ **Do not build anything here.** This account only **forks** the upstream repos and sends pull
 > requests. Create issues, content, and history in the **upstream** repos — never in the machine
 > account. Its only non-fork is this profile.
 
-- **Clone freely** over **SSH** with a full-repo key.
+- **Sign in once, use it anywhere.** Authentication is a single **gh auth** login
+  (`gh auth login` — browser/device flow, same idea as signing into VS Code). No per-machine SSH
+  keys to provision; the credential travels with you.
+- **AI-assisted by default.** **VS Code on Ubuntu 26.04 LTS → opencode v2 → DeepSeek V4.1 Flash**,
+  via an API key on the most generous free tier and budgeted at **~$1/day**. The agent clones,
+  branches, commits, pushes, and opens the PRs.
+- **Portable by design.** Nothing is pinned to this one box — the runner is headed for a **private
+  VPC** so it moves without depending on specific hardware.
 - **One branch per issue**, cut from a clean, up-to-date `main`; push it to the fork and open a PR
   that **closes the linked issue**.
-- **Never merge.** [The main account](https://github.com/kapetao) reviews, approves (one review),
-  and merges.
+- **The main account is the gate.** [kapetao](https://github.com/kapetao) owns the review rules and
+  PR restrictions — every PR needs its review before it merges.
 
 ## Workflow — the relay
 
@@ -19,23 +26,24 @@ that does exactly one job — turn issues into reviewed pull requests.
 4. **Delete the branch** once merged; the fork falls back to `main`.
 5. **Unsure?** Comment on the issue and stop — resume later from a fresh `main`.
 
-Pick up exactly where the last runner stopped, but never keep running on an outdated baton.
+Plug-and-play: any machine that can run `gh auth login` and hold an API key can pick up the baton and
+keep running — just never keep running on an outdated one.
 
 ```mermaid
 flowchart TB
   issue["📝 issue · upstream#N"]:::canon
-  key["🔑 SSH key · full-repo scope"]:::infra
-  mach["🤖 machine account"]:::machine
+  auth["🔐 auth · one login for everything<br/>(gh auth / VS Code sign-in)"]:::infra
+  ai["🤖 AI agent · opencode v2<br/>Ubuntu 26.04 LTS → DeepSeek V4.1 Flash"]:::machine
   fork["🍴 fork"]:::fork
   canon["📦 upstream · main"]:::canon
-  ui["📱 tablet · GitHub UI"]:::human
+  gate["🛡️ main account · review + PR rules"]:::human
 
-  issue --> mach
-  key --> mach
-  mach -->|commit · push| fork
+  issue --> ai
+  auth --> ai
+  ai -->|commit · push| fork
   fork -->|open PR “closes #N”| canon
-  canon -->|review + comment| ui
-  ui -->|approve + merge| canon
+  canon -->|review + approve| gate
+  gate -->|merge| canon
   canon -.->|auto-closes| issue
 
   classDef infra fill:#f6f8fa,stroke:#666;
